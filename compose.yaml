@@ -1,0 +1,26 @@
+services:
+  todo-app:
+    image: todo-app
+    build:
+      context: ./app
+    depends_on:
+      - todo-database
+      - redis-server
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+
+  todo-database:
+    image: mongo:6
+    volumes: 
+     - database:/data/db
+    ports:
+      - 27017:27017
+  redis-server:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+volumes:
+  database:
